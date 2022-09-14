@@ -15,6 +15,6 @@ abstract class DashboardStateBase with Store {
   @action
   Future<void> getMovies() async {
     final res = await moviesRepository.getMovies();
-    movies = res.asObservable();
+    movies = res.results.asObservable();
   }
 }

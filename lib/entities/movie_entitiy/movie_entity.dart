@@ -1,19 +1,29 @@
+import 'package:movie_app/consts/configs.dart';
+
 class MovieEntity {
   MovieEntity({
-    required this.name,
-    this.description,
+    required this.id,
+    required this.title,
+    this.overview,
+    this.imageUrl,
   });
 
-  final String name;
-  final String? description;
+  final int id;
+  final String title;
+  final String? overview;
+  final String? imageUrl;
 
   factory MovieEntity.fromJson(Map<String, dynamic> data) {
-    final String name = data['name'];
-    final String description = data['description'];
+    final int id = data['id'] ;
+    final String title = data['title'];
+    final String overview = data['overview'];
+    final String imagePath = data['poster_path'];
 
     return MovieEntity(
-      name: name,
-      description: description,
+      id: id,
+      title: title,
+      overview: overview,
+      imageUrl: '${ConfigsEntity.baseImage}$imagePath',
     );
   }
 }
