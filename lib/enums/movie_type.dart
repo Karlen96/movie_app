@@ -1,0 +1,4 @@
+enum MovieType {
+  popular,
+  upcoming,
+}

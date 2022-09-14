@@ -12,7 +12,7 @@ class _MoviePageState extends State<MoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('movie'),
+        title: const Text('movie'),
       ),
     );
   }

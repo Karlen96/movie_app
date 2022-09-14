@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/pages/dashboard_page/dashboard_page.dart';
+import 'package:movie_app/routes.dart';
+import 'package:movie_app/utils/load_json.dart';
 
-void main() {
+import 'consts/assets.dart';
+import 'consts/configs.dart';
+import 'http/dio.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setConfigs();
   runApp(const MyApp());
 }
 
@@ -10,9 +17,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Movie app',
-      home: DashboardPage(),
+      initialRoute: '/',
+      routes: routes,
+      onGenerateRoute: onGenerateRoute,
     );
   }
+}
+
+Future<void> setConfigs() async {
+  final config = await loadJson(Assets.devEnv);
+
+  ConfigsEntity.baseUrl = config['baseUrl'];
+  ConfigsEntity.apiKey = config['apiKey'];
+  setDio();
 }
