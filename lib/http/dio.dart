@@ -1,6 +1,6 @@
 
 import 'package:dio/dio.dart';
-import 'package:movie_app/consts/configs.dart';
+import '../consts/configs.dart';
 
 late final Dio dio;
 

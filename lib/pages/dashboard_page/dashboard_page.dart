@@ -1,17 +1,20 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/pages/dashboard_page/widgets/custom_flexible_space.dart';
+
 import '../../state/dashboard_state/dashboard_state.dart';
 import '../../widgets/slider_item.dart';
+import 'widgets/custom_flexible_space.dart';
+import 'widgets/drawer.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  const DashboardPage({super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final dashboardState = DashboardState();
 
   @override
@@ -23,12 +26,16 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: const DashboardDrawer(),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             backgroundColor: Colors.transparent,
-            flexibleSpace: CustomFlexibleSpace(),
+            flexibleSpace: CustomFlexibleSpace(
+              openDrawer: _openDrawer,
+            ),
           ),
           SliverToBoxAdapter(
             child: CarouselSlider(
@@ -52,5 +59,9 @@ class _DashboardPageState extends State<DashboardPage> {
         ],
       ),
     );
+  }
+
+  void _openDrawer() {
+    _scaffoldKey.currentState?.openDrawer();
   }
 }

@@ -4,9 +4,9 @@ import '../entities/movie_entitiy/movie_entity.dart';
 
 class SliderItem extends StatelessWidget {
   const SliderItem({
-    Key? key,
+    super.key,
     required this.movie,
-  }) : super(key: key);
+  });
 
   final MovieEntity movie;
 

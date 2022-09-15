@@ -1,7 +1,6 @@
-import 'package:movie_app/consts/configs.dart';
-import 'package:movie_app/entities/movie_entitiy/movie_entity.dart';
-
+import '../../consts/configs.dart';
 import '../../entities/meta_entity/meta_entity.dart';
+import '../../entities/movie_entitiy/movie_entity.dart';
 import '../dio.dart';
 
 class MoviesRepository {
@@ -10,7 +9,7 @@ class MoviesRepository {
         '${ConfigsEntity.baseUrl}/3/discover/movie?api_key=${ConfigsEntity.apiKey}';
     final res = await dio.get(uri);
 
-    return MetaEntity.fromJson(res.data);
+    return MetaEntity.fromJson(res.data as Map<String, dynamic>);
   }
 
   Future<MovieEntity> getMovie(String movieId) async {
@@ -18,6 +17,6 @@ class MoviesRepository {
         '${ConfigsEntity.baseUrl}/3/movie/$movieId?api_key=${ConfigsEntity.apiKey}';
     final res = await dio.get(uri);
 
-    return MovieEntity.fromJson(res.data);
+    return MovieEntity.fromJson(res.data as Map<String, dynamic>);
   }
 }

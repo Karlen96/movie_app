@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../consts/assets.dart';
+
 class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
-  const CustomFlexibleSpace({Key? key}) : super(key: key);
+  const CustomFlexibleSpace({
+    super.key,
+    required this.openDrawer,
+  });
+
+  final VoidCallback openDrawer;
 
   @override
   Widget build(BuildContext context) {
@@ -9,15 +16,19 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
       fit: StackFit.expand,
       children: [
         Positioned(
-          left: 16,
+          left: 24,
           top: MediaQuery.of(context).padding.top + 4,
           child: IconButton(
-            onPressed: () {},
+            onPressed: openDrawer,
             icon: const Icon(Icons.menu_rounded),
           ),
         ),
-        Image.network(
-            'http://store-images.s-microsoft.com/image/apps.46851.9007199266246365.1f6d0339-ecce-4fe5-840a-652cd84111ad.ddef6be7-6304-41c0-a347-1d571b66dfb2'),
+        Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 4,
+          ),
+          child: Image.asset(Assets.logoNetflix),
+        ),
       ],
     );
   }

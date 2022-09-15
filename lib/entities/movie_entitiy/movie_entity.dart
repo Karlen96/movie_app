@@ -1,4 +1,4 @@
-import 'package:movie_app/consts/configs.dart';
+import '../../consts/configs.dart';
 
 class MovieEntity {
   MovieEntity({
@@ -14,10 +14,10 @@ class MovieEntity {
   final String? imageUrl;
 
   factory MovieEntity.fromJson(Map<String, dynamic> data) {
-    final int id = data['id'] ;
-    final String title = data['title'];
-    final String overview = data['overview'];
-    final String imagePath = data['poster_path'];
+    final id = data['id'] as int;
+    final title = data['title'] as String;
+    final overview = data['overview'] as String;
+    final imagePath = data['poster_path'] as String;
 
     return MovieEntity(
       id: id,

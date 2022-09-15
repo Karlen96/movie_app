@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class MoviePage extends StatefulWidget {
   const MoviePage({
-    Key? key,
+    super.key,
     required this.id,
-  }) : super(key: key);
+  });
 
   final int id;
 

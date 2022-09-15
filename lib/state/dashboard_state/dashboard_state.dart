@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:movie_app/entities/movie_entitiy/movie_entity.dart';
-import 'package:movie_app/http/repositories/movies_repository.dart';
+import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../http/repositories/movies_repository.dart';
 
 part 'dashboard_state.g.dart';
 
