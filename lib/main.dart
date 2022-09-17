@@ -19,18 +19,20 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => EasyLocalization(
-        supportedLocales: const [Locale('en')],
-        path: Assets.translations,
-        useOnlyLangCode: true,
-        startLocale: const Locale('en'),
-        fallbackLocale: const Locale('en'),
-        child: MaterialApp.router(
-          theme: lightTheme,
-          routerDelegate: router.delegate(),
-          routeInformationParser: router.defaultRouteParser(),
-        ),
-      );
+  Widget build(BuildContext context) {
+    return EasyLocalization(
+      supportedLocales: const [Locale('en')],
+      path: Assets.translations,
+      useOnlyLangCode: true,
+      startLocale: const Locale('en'),
+      fallbackLocale: const Locale('en'),
+      child: MaterialApp.router(
+        theme: lightTheme,
+        routerDelegate: router.delegate(),
+        routeInformationParser: router.defaultRouteParser(),
+      ),
+    );
+  }
 }
 
 Future<void> setConfigs() async {

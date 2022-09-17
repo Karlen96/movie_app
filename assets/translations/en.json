@@ -1,3 +1,9 @@
 {
-  "next": "Next"
+  "next": "Next",
+  "movieTypes": {
+    "popular": "Popular",
+    "topRated": "Top rated",
+    "nowPlaying": "Now playing",
+    "upcoming": "Upcoming"
+  }
 }

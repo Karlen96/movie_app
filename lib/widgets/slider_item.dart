@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../consts/app_colors.dart';
 import '../entities/movie_entitiy/movie_entity.dart';
 
 class SliderItem extends StatelessWidget {
@@ -34,11 +35,25 @@ class SliderItem extends StatelessWidget {
               fit: BoxFit.cover,
             ),
             Positioned(
-              bottom: 16,
-              left: 16,
-              child: Text(
-                movie.title,
-                style: Theme.of(context).textTheme.headline4,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: AppColors.dark.withOpacity(0.4),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    movie.title,
+                    style: Theme.of(context).textTheme.headline4,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ),
           ],
