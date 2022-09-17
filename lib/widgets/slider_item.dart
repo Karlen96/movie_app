@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../consts/app_colors.dart';
 import '../entities/movie_entitiy/movie_entity.dart';
+import '../routes/app_router.dart';
+import '../routes/router.dart';
 
 class SliderItem extends StatelessWidget {
   const SliderItem({
@@ -27,36 +29,50 @@ class SliderItem extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.network(
-              movie.imageUrl!,
-              fit: BoxFit.cover,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: AppColors.dark.withOpacity(0.4),
+        child: InkWell(
+          onTap: () {
+            // Navigator.of(context).push(
+            //     HeroPageRoute(
+            //       tag: 'Hero Page',
+            //       child: HeroPage(),
+            //     )
+            // );
+            router.push(MovieRoute(movie: movie));
+          },
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Hero(
+                tag: movie.id,
+                child: Image.network(
+                  movie.imageUrl!,
+                  fit: BoxFit.cover,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 16,
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.dark.withOpacity(0.4),
                   ),
-                  child: Text(
-                    movie.title,
-                    style: Theme.of(context).textTheme.headline4,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8,
+                      horizontal: 16,
+                    ),
+                    child: Text(
+                      movie.title,
+                      style: Theme.of(context).textTheme.headline4,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -18,13 +18,15 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     DashboardRoute.name: (routeData) {
-      return AdaptivePage<dynamic>(
+      return MaterialPageX<dynamic>(
           routeData: routeData, child: const DashboardPage());
     },
     MovieRoute.name: (routeData) {
       final args = routeData.argsAs<MovieRouteArgs>();
-      return AdaptivePage<dynamic>(
-          routeData: routeData, child: MoviePage(key: args.key, id: args.id));
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: MoviePage(key: args.key, movie: args.movie),
+          fullscreenDialog: true);
     }
   };
 
@@ -46,22 +48,22 @@ class DashboardRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [MoviePage]
 class MovieRoute extends PageRouteInfo<MovieRouteArgs> {
-  MovieRoute({Key? key, required int id})
+  MovieRoute({Key? key, required MovieEntity movie})
       : super(MovieRoute.name,
-            path: '/movie-page', args: MovieRouteArgs(key: key, id: id));
+            path: '/movie-page', args: MovieRouteArgs(key: key, movie: movie));
 
   static const String name = 'MovieRoute';
 }
 
 class MovieRouteArgs {
-  const MovieRouteArgs({this.key, required this.id});
+  const MovieRouteArgs({this.key, required this.movie});
 
   final Key? key;
 
-  final int id;
+  final MovieEntity movie;
 
   @override
   String toString() {
-    return 'MovieRouteArgs{key: $key, id: $id}';
+    return 'MovieRouteArgs{key: $key, movie: $movie}';
   }
 }

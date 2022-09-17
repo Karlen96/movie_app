@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../consts/dimens.dart';
 import '../../../entities/movie_entitiy/movie_entity.dart';
+import '../../../routes/app_router.dart';
+import '../../../routes/router.dart';
 
 class MoviesHorizontalListWrapper extends StatelessWidget {
   const MoviesHorizontalListWrapper({
@@ -64,13 +66,21 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Stack(
-                      children: [
-                        Image.network(
-                          movies[i].imageUrl!,
-                          fit: BoxFit.cover,
-                        ),
-                      ],
+                    child: InkWell(
+                      onTap: () {
+                        router.push(MovieRoute(movie: movies[i]));
+                      },
+                      child: Stack(
+                        children: [
+                          Hero(
+                            tag: movies[i].id,
+                            child: Image.network(
+                              movies[i].imageUrl!,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
