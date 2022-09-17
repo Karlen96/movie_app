@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,18 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setConfigs();
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [
+        Locale('en'),
+      ],
+      useOnlyLangCode: true,
+      startLocale: const Locale('en'),
+      useFallbackTranslations: true,
+      path: Assets.translations,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,17 +32,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasyLocalization(
-      supportedLocales: const [Locale('en')],
-      path: Assets.translations,
-      useOnlyLangCode: true,
-      startLocale: const Locale('en'),
-      fallbackLocale: const Locale('en'),
-      child: MaterialApp.router(
-        theme: lightTheme,
-        routerDelegate: router.delegate(),
-        routeInformationParser: router.defaultRouteParser(),
-      ),
+    return MaterialApp.router(
+      theme: lightTheme,
+      debugShowCheckedModeBanner: false,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      localizationsDelegates: context.localizationDelegates,
+      routerDelegate: router.delegate(),
+      routeInformationParser: router.defaultRouteParser(),
     );
   }
 }

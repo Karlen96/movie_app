@@ -7,9 +7,11 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
   const MoviesHorizontalListWrapper({
     super.key,
     required this.movies,
+    required this.title,
   });
 
   final List<MovieEntity> movies;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('title'),
+              Text(title),
               IconButton(
                 icon: const Icon(
                   Icons.arrow_forward_rounded,
@@ -32,6 +34,7 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
             ],
           ),
         ),
+        const SizedBox(height: 12),
         SizedBox(
           height: 200,
           child: ListView.builder(

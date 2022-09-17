@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:movie_app/pages/dashboard_page/widgets/movies_horizontal_list_wrapper.dart';
 
 import '../../consts/dimens.dart';
 import '../../enums/movie_type.dart';
@@ -10,6 +10,7 @@ import '../../widgets/slider_item.dart';
 import 'widgets/custom_flexible_space.dart';
 import 'widgets/drawer.dart';
 import 'widgets/movie_type_widget.dart';
+import 'widgets/movies_horizontal_list_wrapper.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -94,14 +95,24 @@ class _DashboardPageState extends State<DashboardPage> {
             child: Observer(
               builder: (_) => MoviesHorizontalListWrapper(
                 movies: dashboardState.movies,
+                title: 'dashboardPage.myList'.tr(),
               ),
             ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 12),
           ),
           SliverToBoxAdapter(
             child: Observer(
               builder: (_) => MoviesHorizontalListWrapper(
                 movies: dashboardState.movies,
+                title: 'dashboardPage.popular'.tr(),
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: MediaQuery.of(context).padding.bottom + 12,
             ),
           ),
         ],
