@@ -43,10 +43,10 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
           alignment: Alignment.bottomCenter,
           clipBehavior: Clip.none,
           children: [
-            ClipPath(
-              clipper: CustomImageClipper(),
-              child: Hero(
-                tag: id,
+            Hero(
+              tag: id,
+              child: ClipPath(
+                clipper: CustomImageClipper(),
                 child: Image.network(
                   imageUrl,
                   fit: BoxFit.cover,
