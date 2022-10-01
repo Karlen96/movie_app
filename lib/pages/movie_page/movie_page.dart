@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../moxins/after_first_layout.dart';
+import '../../state/movie_state/movie_state.dart';
 import 'widget/custom_flexible_space.dart';
 
 class MoviePage extends StatefulWidget {
@@ -15,7 +17,22 @@ class MoviePage extends StatefulWidget {
   State<MoviePage> createState() => _MoviePageState();
 }
 
-class _MoviePageState extends State<MoviePage> {
+class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
+  late final MovieState movieState;
+
+  @override
+  void initState() {
+    super.initState();
+    movieState = MovieState(
+      movie: widget.movie,
+    );
+  }
+
+  @override
+  Future<void> afterFirstLayout(BuildContext context) async {
+    await movieState.getMovie();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -30,8 +47,7 @@ class _MoviePageState extends State<MoviePage> {
             leading: const SizedBox(),
             elevation: 0,
             flexibleSpace: CustomFlexibleSpace(
-              imageUrl: widget.movie.imageUrl!,
-              id: widget.movie.id,
+              movieState: movieState,
             ),
           ),
           const SliverToBoxAdapter(

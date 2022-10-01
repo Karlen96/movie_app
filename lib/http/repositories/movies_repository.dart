@@ -12,7 +12,7 @@ class MoviesRepository {
     return MetaEntity.fromJson(res.data as Map<String, dynamic>);
   }
 
-  Future<MovieEntity> getMovie(String movieId) async {
+  Future<MovieEntity> getMovie(int movieId) async {
     final uri =
         '${ConfigsEntity.baseUrl}/3/movie/$movieId?api_key=${ConfigsEntity.apiKey}';
     final res = await dio.get(uri);

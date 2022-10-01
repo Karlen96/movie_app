@@ -1,16 +1,14 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../../consts/dimens.dart';
-import '../../enums/movie_type.dart';
+import '../../moxins/after_first_layout.dart';
 import '../../state/dashboard_state/dashboard_state.dart';
 import '../../widgets/slider_item.dart';
 import 'widgets/custom_flexible_space.dart';
 import 'widgets/drawer.dart';
-import 'widgets/movie_type_widget.dart';
-import 'widgets/movies_horizontal_list_wrapper.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -19,14 +17,13 @@ class DashboardPage extends StatefulWidget {
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final dashboardState = DashboardState();
 
   @override
-  void initState() {
-    super.initState();
-    dashboardState.getMovies();
+  Future<void> afterFirstLayout(BuildContext context) async {
+    await dashboardState.getMovies();
   }
 
   @override
@@ -69,47 +66,47 @@ class _DashboardPageState extends State<DashboardPage> {
           const SliverToBoxAdapter(
             child: SizedBox(height: 12),
           ),
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              clipBehavior: Clip.none,
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(
-                left: horizontalPaddingValue,
-              ),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: MovieType.values
-                    .map(
-                      (item) => MovieTypeWidget(
-                        movieType: item,
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: SingleChildScrollView(
+          //     clipBehavior: Clip.none,
+          //     physics: const BouncingScrollPhysics(),
+          //     padding: const EdgeInsets.only(
+          //       left: horizontalPaddingValue,
+          //     ),
+          //     scrollDirection: Axis.horizontal,
+          //     child: Row(
+          //       children: MovieType.values
+          //           .map(
+          //             (item) => MovieTypeWidget(
+          //               movieType: item,
+          //             ),
+          //           )
+          //           .toList(),
+          //     ),
+          //   ),
+          // ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 12),
           ),
-          SliverToBoxAdapter(
-            child: Observer(
-              builder: (_) => MoviesHorizontalListWrapper(
-                movies: dashboardState.movies,
-                title: 'dashboardPage.myList'.tr(),
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Observer(
+          //     builder: (_) => MoviesHorizontalListWrapper(
+          //       movies: dashboardState.movies,
+          //       title: 'dashboardPage.myList'.tr(),
+          //     ),
+          //   ),
+          // ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 12),
           ),
-          SliverToBoxAdapter(
-            child: Observer(
-              builder: (_) => MoviesHorizontalListWrapper(
-                movies: dashboardState.movies,
-                title: 'dashboardPage.popular'.tr(),
-              ),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Observer(
+          //     builder: (_) => MoviesHorizontalListWrapper(
+          //       movies: dashboardState.movies,
+          //       title: 'dashboardPage.popular'.tr(),
+          //     ),
+          //   ),
+          // ),
           SliverToBoxAdapter(
             child: SizedBox(
               height: MediaQuery.of(context).padding.bottom + 12,

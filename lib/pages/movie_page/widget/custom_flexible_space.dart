@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../consts/app_colors.dart';
 import '../../../consts/dimens.dart';
 import '../../../routes/router.dart';
+import '../../../state/movie_state/movie_state.dart';
 
 class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
   const CustomFlexibleSpace({
     super.key,
-    required this.imageUrl,
-    required this.id,
+    required this.movieState,
   });
 
-  final String imageUrl;
-  final int id;
+  final MovieState movieState;
 
   @override
   Widget build(BuildContext context) {
@@ -44,16 +44,18 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
           clipBehavior: Clip.none,
           children: [
             Hero(
-              tag: id,
+              tag: movieState.movie.id,
               child: ClipPath(
                 clipper: CustomImageClipper(),
-                child: Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
+                child: Observer(
+                  builder: (_) => Image.network(
+                    movieState.movie.imageUrl!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               bottom: -32,
               left: 0,
               right: 0,
@@ -62,9 +64,22 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
                 height: 64,
                 child: CircleAvatar(
                   backgroundColor: AppColors.white,
-                  child: IconButton(
-                    onPressed: null,
-                    icon: Icon(Icons.play_arrow),
+                  child: Observer(
+                    builder: (_) {
+                      return AnimatedSwitcher(
+                        duration: const Duration(microseconds: 250),
+                        child: movieState.loadingState.isLoading
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const IconButton(
+                                onPressed: null,
+                                icon: Icon(Icons.play_arrow),
+                              ),
+                      );
+                    },
                   ),
                 ),
               ),
