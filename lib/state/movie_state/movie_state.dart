@@ -25,10 +25,11 @@ abstract class MovieStateBase with Store {
 
   Future<void> getMovie() async {
     await loadingState.toggleLoading();
-    final res = await moviesRepository.getMovie(
-      movie.id,
-    );
-    setMovie(res);
+    await Future.delayed(const Duration(seconds: 1),);
+    // final res = await moviesRepository.getMovie(
+    //   movie.id,
+    // );
+    // setMovie(res);
     await loadingState.toggleLoading(val: false);
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../consts/dimens.dart';
 import '../../entities/movie_entitiy/movie_entity.dart';
-import '../../moxins/after_first_layout.dart';
+import '../../mixins/after_first_layout.dart';
 import '../../state/movie_state/movie_state.dart';
 import 'widget/custom_flexible_space.dart';
 
@@ -50,10 +51,30 @@ class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
               movieState: movieState,
             ),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 1000,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 48,
+              horizontal: horizontalPaddingValue,
             ),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    movieState.movie.title,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    movieState.movie.overview ?? '',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 500,),
           ),
         ],
       ),

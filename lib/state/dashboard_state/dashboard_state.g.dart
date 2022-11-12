@@ -25,18 +25,58 @@ mixin _$DashboardState on DashboardStateBase, Store {
     });
   }
 
-  late final _$getMoviesAsyncAction =
-      AsyncAction('DashboardStateBase.getMovies', context: context);
+  late final _$topMoviesAtom =
+      Atom(name: 'DashboardStateBase.topMovies', context: context);
 
   @override
-  Future<void> getMovies() {
-    return _$getMoviesAsyncAction.run(() => super.getMovies());
+  ObservableList<MovieEntity> get topMovies {
+    _$topMoviesAtom.reportRead();
+    return super.topMovies;
+  }
+
+  @override
+  set topMovies(ObservableList<MovieEntity> value) {
+    _$topMoviesAtom.reportWrite(value, super.topMovies, () {
+      super.topMovies = value;
+    });
+  }
+
+  late final _$nowBroadcastMoviesAtom =
+      Atom(name: 'DashboardStateBase.nowBroadcastMovies', context: context);
+
+  @override
+  ObservableList<MovieEntity> get nowBroadcastMovies {
+    _$nowBroadcastMoviesAtom.reportRead();
+    return super.nowBroadcastMovies;
+  }
+
+  @override
+  set nowBroadcastMovies(ObservableList<MovieEntity> value) {
+    _$nowBroadcastMoviesAtom.reportWrite(value, super.nowBroadcastMovies, () {
+      super.nowBroadcastMovies = value;
+    });
+  }
+
+  late final _$DashboardStateBaseActionController =
+      ActionController(name: 'DashboardStateBase', context: context);
+
+  @override
+  void getMoviesMock() {
+    final _$actionInfo = _$DashboardStateBaseActionController.startAction(
+        name: 'DashboardStateBase.getMoviesMock');
+    try {
+      return super.getMoviesMock();
+    } finally {
+      _$DashboardStateBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
-movies: ${movies}
+movies: ${movies},
+topMovies: ${topMovies},
+nowBroadcastMovies: ${nowBroadcastMovies}
     ''';
   }
 }

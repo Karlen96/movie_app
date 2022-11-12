@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -16,105 +18,129 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      alignment: Alignment.bottomCenter,
-      children: [
-        const Center(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.dark,
-                  offset: Offset(50, 50),
-                  blurRadius: 1000,
-                  spreadRadius: 50,
+    return LayoutBuilder(
+      builder: (BuildContext, BoxConstraints) {
+        final settings = context
+            .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
+        final deltaExtent = settings!.maxExtent - settings.minExtent;
+
+        final t =
+            (1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent)
+                .clamp(0.0, 1.0);
+        final fadeStart =
+            math.max(0, 1.0 - kToolbarHeight / deltaExtent).toDouble();
+        const fadeEnd = 1.0;
+        final opacity = 1.0 - Interval(fadeStart, fadeEnd).transform(t);
+        return Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.bottomCenter,
+          children: [
+            Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.bottomCenter,
+              clipBehavior: Clip.none,
+              children: [
+                Hero(
+                  tag: movieState.movie.id,
+                  child: ClipPath(
+                    clipper: CustomImageClipper(),
+                    child: Observer(
+                      builder: (_) => Image.network(
+                        movieState.movie.imageUrl!,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: -32,
+                  left: 0,
+                  right: 0,
+                  child: SizedBox(
+                    width: 64,
+                    height: 64,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.white,
+                      child: Observer(
+                        builder: (_) {
+                          return AnimatedSwitcher(
+                            duration: const Duration(microseconds: 250),
+                            child: movieState.loadingState.isLoading
+                                ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : const IconButton(
+                                    onPressed: null,
+                                    icon: Icon(Icons.play_arrow),
+                                  ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
-            child: SizedBox(
-              width: 150,
-              height: 150,
-            ),
-          ),
-        ),
-        Stack(
-          fit: StackFit.expand,
-          alignment: Alignment.bottomCenter,
-          clipBehavior: Clip.none,
-          children: [
-            Hero(
-              tag: movieState.movie.id,
-              child: ClipPath(
-                clipper: CustomImageClipper(),
-                child: Observer(
-                  builder: (_) => Image.network(
-                    movieState.movie.imageUrl!,
-                    fit: BoxFit.cover,
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Opacity(
+                opacity: 1 - opacity,
+                child: const ColoredBox(
+                  color: AppColors.white,
+                  child: SizedBox(
+                    height: 100,
                   ),
                 ),
               ),
             ),
             Positioned(
-              bottom: -32,
+              top: MediaQuery.of(context).padding.top + 16,
               left: 0,
               right: 0,
-              child: SizedBox(
-                width: 64,
-                height: 64,
-                child: CircleAvatar(
-                  backgroundColor: AppColors.white,
-                  child: Observer(
-                    builder: (_) {
-                      return AnimatedSwitcher(
-                        duration: const Duration(microseconds: 250),
-                        child: movieState.loadingState.isLoading
-                            ? const SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(),
-                              )
-                            : const IconButton(
-                                onPressed: null,
-                                icon: Icon(Icons.play_arrow),
-                              ),
-                      );
-                    },
+              child: Opacity(
+                opacity: 1 - opacity,
+                child: Text(
+                  movieState.movie.title,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ),
+            ),
+            Positioned(
+              left: horizontalPaddingValue,
+              top: MediaQuery.of(context).padding.top + 12,
+              child: CircleAvatar(
+                backgroundColor: AppColors.white,
+                child: IconButton(
+                  onPressed: router.pop,
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.dark,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              right: horizontalPaddingValue,
+              top: MediaQuery.of(context).padding.top + 12,
+              child: const CircleAvatar(
+                backgroundColor: AppColors.white,
+                child: IconButton(
+                  onPressed: null,
+                  icon: Icon(
+                    Icons.favorite,
+                    color: AppColors.dark,
                   ),
                 ),
               ),
             ),
           ],
-        ),
-        Positioned(
-          left: horizontalPaddingValue,
-          top: MediaQuery.of(context).padding.top + 12,
-          child: CircleAvatar(
-            backgroundColor: AppColors.white,
-            child: IconButton(
-              onPressed: router.pop,
-              icon: const Icon(
-                Icons.arrow_back,
-                color: AppColors.dark,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          right: horizontalPaddingValue,
-          top: MediaQuery.of(context).padding.top + 12,
-          child: const CircleAvatar(
-            backgroundColor: AppColors.white,
-            child: IconButton(
-              onPressed: null,
-              icon: Icon(
-                Icons.favorite,
-                color: AppColors.dark,
-              ),
-            ),
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 

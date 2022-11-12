@@ -31,12 +31,6 @@ class SliderItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           onTap: () {
-            // Navigator.of(context).push(
-            //     HeroPageRoute(
-            //       tag: 'Hero Page',
-            //       child: HeroPage(),
-            //     )
-            // );
             router.push(MovieRoute(movie: movie));
           },
           child: Stack(
