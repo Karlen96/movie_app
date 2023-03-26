@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../consts/app_colors.dart';
 import '../../consts/dimens.dart';
 import '../../enums/movie_type.dart';
 import '../../mixins/after_first_layout.dart';
@@ -124,8 +125,11 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
           Observer(
             builder: (_) {
               if (dashboardState.loadingState.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return const ColoredBox(
+                  color: AppColors.white,
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 );
               }
 
