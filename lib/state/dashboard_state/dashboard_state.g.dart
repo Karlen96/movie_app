@@ -57,18 +57,12 @@ mixin _$DashboardState on DashboardStateBase, Store {
     });
   }
 
-  late final _$DashboardStateBaseActionController =
-      ActionController(name: 'DashboardStateBase', context: context);
+  late final _$getMoviesMockAsyncAction =
+      AsyncAction('DashboardStateBase.getMoviesMock', context: context);
 
   @override
-  void getMoviesMock() {
-    final _$actionInfo = _$DashboardStateBaseActionController.startAction(
-        name: 'DashboardStateBase.getMoviesMock');
-    try {
-      return super.getMoviesMock();
-    } finally {
-      _$DashboardStateBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> getMoviesMock() {
+    return _$getMoviesMockAsyncAction.run(() => super.getMoviesMock());
   }
 
   @override

@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
-      dashboardState.getMoviesMock();
+    dashboardState.getMoviesMock();
   }
 
   @override
@@ -36,86 +36,101 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
     return Scaffold(
       key: _scaffoldKey,
       drawer: const DashboardDrawer(),
-      body: CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.transparent,
-            flexibleSpace: CustomFlexibleSpace(
-              openDrawer: _openDrawer,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Observer(
-              builder: (_) {
-                return CarouselSlider(
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    height: MediaQuery.of(context).size.height * 0.3,
-                  ),
-                  items: dashboardState.movies.map(
-                    (item) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 16,
-                        ),
-                        child: SliderItem(movie: item),
-                      );
-                    },
-                  ).toList(),
-                );
-              },
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 12),
-          ),
-          SliverToBoxAdapter(
-            child: SingleChildScrollView(
-              clipBehavior: Clip.none,
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.only(
-                left: horizontalPaddingValue,
+      body: Stack(
+        children: [
+          CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                backgroundColor: Colors.transparent,
+                flexibleSpace: CustomFlexibleSpace(
+                  openDrawer: _openDrawer,
+                ),
               ),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: MovieType.values
-                    .map(
-                      (item) => MovieTypeWidget(
-                        movieType: item,
+              SliverToBoxAdapter(
+                child: Observer(
+                  builder: (_) {
+                    return CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        height: MediaQuery.of(context).size.height * 0.3,
                       ),
-                    )
-                    .toList(),
+                      items: dashboardState.movies.map(
+                        (item) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                            ),
+                            child: SliderItem(movie: item),
+                          );
+                        },
+                      ).toList(),
+                    );
+                  },
+                ),
               ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 12),
-          ),
-          SliverToBoxAdapter(
-            child: Observer(
-              builder: (_) => MoviesHorizontalListWrapper(
-                movies: dashboardState.topMovies,
-                title: 'dashboardPage.myList'.tr(),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 12),
               ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 12),
-          ),
-          SliverToBoxAdapter(
-            child: Observer(
-              builder: (_) => MoviesHorizontalListWrapper(
-                movies: dashboardState.nowBroadcastMovies,
-                title: 'dashboardPage.popular'.tr(),
+              SliverToBoxAdapter(
+                child: SingleChildScrollView(
+                  clipBehavior: Clip.none,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(
+                    left: horizontalPaddingValue,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: MovieType.values
+                        .map(
+                          (item) => MovieTypeWidget(
+                            movieType: item,
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
               ),
-            ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 12),
+              ),
+              SliverToBoxAdapter(
+                child: Observer(
+                  builder: (_) => MoviesHorizontalListWrapper(
+                    movies: dashboardState.topMovies,
+                    title: 'dashboardPage.myList'.tr(),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 12),
+              ),
+              SliverToBoxAdapter(
+                child: Observer(
+                  builder: (_) => MoviesHorizontalListWrapper(
+                    movies: dashboardState.nowBroadcastMovies,
+                    title: 'dashboardPage.popular'.tr(),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: MediaQuery.of(context).padding.bottom + 48,
+                ),
+              ),
+            ],
           ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.of(context).padding.bottom + 48,
-            ),
+          Observer(
+            builder: (_) {
+              if (dashboardState.loadingState.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return const SizedBox();
+            },
           ),
         ],
       ),
