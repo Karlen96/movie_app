@@ -29,7 +29,7 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
-    dashboardState.getMoviesMock();
+    await dashboardState.getMoviesMock();
   }
 
   @override
