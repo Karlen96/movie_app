@@ -8,7 +8,7 @@ Application is mainly about movies. in this app we can find popular movies from 
 2) Marvel
 3) DC Comics
 
-The application is stands out for by its unique design and ease usege
+The application is stands out for by its unique design and ease usage
 
 it has a built-in player that has the ability to work in stealth mode when you want to find some other movie, for example on YouTube.
 
