@@ -106,7 +106,7 @@ class _DashboardPageState extends State<DashboardPage> with AfterLayoutMixin {
                 child: Observer(
                   builder: (_) => MoviesHorizontalListWrapper(
                     movies: dashboardState.topMovies,
-                    title: 'dashboardPage.myList'.tr(),
+                    title: 'dashboardPage.recommended'.tr(),
                   ),
                 ),
               ),

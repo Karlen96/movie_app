@@ -1,13 +1,15 @@
 {
   "next": "Next",
   "dashboardPage": {
-    "myList": "My list",
-    "popular": "Popular of Netflix"
+    "recommended": "Recommended",
+    "popular": "Popular"
   },
-  "movieTypes": {
-    "popular": "Popular",
-    "topRated": "Top rated",
-    "nowPlaying": "Now playing",
-    "upcoming": "Upcoming"
+  "enums": {
+    "movieTypes": {
+      "action": "Action",
+      "comedy": "Comedy",
+      "fantasy": "Fantasy",
+      "romance": "Romance"
+    }
   }
 }

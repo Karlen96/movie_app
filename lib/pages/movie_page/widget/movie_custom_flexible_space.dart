@@ -8,8 +8,8 @@ import '../../../consts/dimens.dart';
 import '../../../routes/router.dart';
 import '../../../state/movie_state/movie_state.dart';
 
-class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
-  const CustomFlexibleSpace({
+class MovieCustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
+  const MovieCustomFlexibleSpace({
     super.key,
     required this.movieState,
     required this.onPlay,
@@ -132,20 +132,20 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
                 ),
               ),
             ),
-            Positioned(
-              right: horizontalPaddingValue,
-              top: MediaQuery.of(context).padding.top + 12,
-              child: const CircleAvatar(
-                backgroundColor: AppColors.white,
-                child: IconButton(
-                  onPressed: null,
-                  icon: Icon(
-                    Icons.favorite,
-                    color: AppColors.dark,
-                  ),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   right: horizontalPaddingValue,
+            //   top: MediaQuery.of(context).padding.top + 12,
+            //   child: const CircleAvatar(
+            //     backgroundColor: AppColors.white,
+            //     child: IconButton(
+            //       onPressed: null,
+            //       icon: Icon(
+            //         Icons.favorite,
+            //         color: AppColors.dark,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         );
       },

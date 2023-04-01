@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../movie_entitiy/movie_entity.dart';
+import '../movie_entity/movie_entity.dart';
 
 part 'meta_entity.freezed.dart';
 

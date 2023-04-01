@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 
 import '../consts/app_colors.dart';
-import '../entities/movie_entitiy/movie_entity.dart';
+import '../entities/movie_entity/movie_entity.dart';
 import '../routes/app_router.dart';
 import '../routes/router.dart';
 
@@ -15,31 +16,31 @@ class SliderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: () {
-            router.push(MovieRoute(movie: movie));
-          },
+    return ScaleTap(
+      onPressed: () {
+        router.push(MovieRoute(movie: movie));
+      },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 3,
+              offset: const Offset(0, 1),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
           child: Stack(
             fit: StackFit.expand,
             children: [
               Hero(
                 tag: movie.id,
                 child: Image.network(
-                  movie.imageUrl!,
+                  movie.imageUrl,
                   fit: BoxFit.cover,
                 ),
               ),

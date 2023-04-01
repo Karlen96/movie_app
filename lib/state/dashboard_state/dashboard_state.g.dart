@@ -57,6 +57,22 @@ mixin _$DashboardState on DashboardStateBase, Store {
     });
   }
 
+  late final _$genresAtom =
+      Atom(name: 'DashboardStateBase.genres', context: context);
+
+  @override
+  ObservableList<GenreEntity> get genres {
+    _$genresAtom.reportRead();
+    return super.genres;
+  }
+
+  @override
+  set genres(ObservableList<GenreEntity> value) {
+    _$genresAtom.reportWrite(value, super.genres, () {
+      super.genres = value;
+    });
+  }
+
   late final _$getMoviesAsyncAction =
       AsyncAction('DashboardStateBase.getMovies', context: context);
 
@@ -65,12 +81,38 @@ mixin _$DashboardState on DashboardStateBase, Store {
     return _$getMoviesAsyncAction.run(() => super.getMovies());
   }
 
+  late final _$getGenresAsyncAction =
+      AsyncAction('DashboardStateBase.getGenres', context: context);
+
+  @override
+  Future<void> getGenres() {
+    return _$getGenresAsyncAction.run(() => super.getGenres());
+  }
+
+  late final _$getTopMoviesAsyncAction =
+      AsyncAction('DashboardStateBase.getTopMovies', context: context);
+
+  @override
+  Future<void> getTopMovies() {
+    return _$getTopMoviesAsyncAction.run(() => super.getTopMovies());
+  }
+
+  late final _$getBroadcastMoviesAsyncAction =
+      AsyncAction('DashboardStateBase.getBroadcastMovies', context: context);
+
+  @override
+  Future<void> getBroadcastMovies() {
+    return _$getBroadcastMoviesAsyncAction
+        .run(() => super.getBroadcastMovies());
+  }
+
   @override
   String toString() {
     return '''
 movies: ${movies},
 topMovies: ${topMovies},
-nowBroadcastMovies: ${nowBroadcastMovies}
+nowBroadcastMovies: ${nowBroadcastMovies},
+genres: ${genres}
     ''';
   }
 }

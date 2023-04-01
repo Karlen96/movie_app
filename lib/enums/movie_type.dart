@@ -1,38 +1,40 @@
 import '../consts/assets.dart';
 
 enum MovieType {
-  popular,
-  topRated,
-  nowPlaying,
-  upcoming,
+  action,
+  comedy,
+  fantasy,
+  romance,
 }
 
 extension MovieTypeTranslations on MovieType {
-  String get title {
-    switch (this) {
-      case MovieType.popular:
-        return 'movieTypes.popular';
-      case MovieType.topRated:
-        return 'movieTypes.topRated';
-      case MovieType.nowPlaying:
-        return 'movieTypes.nowPlaying';
-      case MovieType.upcoming:
-        return 'movieTypes.upcoming';
-    }
-  }
+  String get title => 'enums.movieTypes.$name';
 }
 
 extension MovieTypeImage on MovieType {
   String get imagePath {
     switch (this) {
-      case MovieType.popular:
+      case MovieType.action:
         return Assets.popular;
-      case MovieType.topRated:
+      case MovieType.comedy:
         return Assets.topRated;
-      case MovieType.nowPlaying:
+      case MovieType.fantasy:
         return Assets.nowPlaying;
-      case MovieType.upcoming:
+      case MovieType.romance:
         return Assets.upcoming;
+    }
+  }
+
+  int get id {
+    switch (this) {
+      case MovieType.action:
+        return 28;
+      case MovieType.comedy:
+        return 35;
+      case MovieType.fantasy:
+        return 14;
+      case MovieType.romance:
+        return 10749;
     }
   }
 }

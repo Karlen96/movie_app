@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../consts/dimens.dart';
-import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../entities/movie_entity/movie_entity.dart';
 import '../../entities/video_entity/video_entity.dart';
 import '../../mixins/after_first_layout.dart';
 import '../../state/movie_state/movie_state.dart';
 import '../../widgets/video_player.dart';
-import 'widget/custom_flexible_space.dart';
+import 'widget/movie_custom_flexible_space.dart';
 
 class MoviePage extends StatefulWidget {
   const MoviePage({
@@ -70,7 +70,7 @@ class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
             stretch: true,
             leading: const SizedBox(),
             elevation: 0,
-            flexibleSpace: CustomFlexibleSpace(
+            flexibleSpace: MovieCustomFlexibleSpace(
               movieState: movieState,
               onPlay: onPlay,
             ),

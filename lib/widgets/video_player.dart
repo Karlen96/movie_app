@@ -26,6 +26,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       initialVideoId: widget.video.key,
       flags: const YoutubePlayerFlags(
         mute: true,
+          useHybridComposition: false,
       ),
     );
   }
@@ -34,6 +35,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void onReady(){
+    _controller.unMute();
   }
 
   @override
@@ -50,6 +55,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       child: YoutubePlayer(
         controller: _controller,
         showVideoProgressIndicator: true,
+          onReady: onReady,
       ),
     );
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 
 import '../../../consts/dimens.dart';
-import '../../../entities/movie_entitiy/movie_entity.dart';
+import '../../../entities/movie_entity/movie_entity.dart';
 import '../../../routes/app_router.dart';
 import '../../../routes/router.dart';
 
@@ -22,17 +23,14 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: horizontalPaddingValue,
+            vertical: 12,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title),
-              IconButton(
-                icon: const Icon(
-                  Icons.arrow_forward_rounded,
-                ),
-                onPressed: () {},
-              )
+              Expanded(
+                child: Text(title),
+              ),
             ],
           ),
         ),
@@ -48,34 +46,34 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
               left: horizontalPaddingValue,
             ),
             itemBuilder: (_, i) {
-              return Padding(
-                padding: const EdgeInsets.only(
-                  right: horizontalPaddingValue,
-                ),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        offset: const Offset(0, 1),
-                      ),
-                    ],
+              return ScaleTap(
+                onPressed: () {
+                  router.push(MovieRoute(movie: movies[i]));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    right: horizontalPaddingValue,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: InkWell(
-                      onTap: () {
-                        router.push(MovieRoute(movie: movies[i]));
-                      },
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
                       child: Stack(
                         children: [
                           Hero(
                             tag: movies[i].id,
                             child: Image.network(
-                              movies[i].imageUrl!,
+                              movies[i].imageUrl,
                               fit: BoxFit.cover,
                             ),
                           ),

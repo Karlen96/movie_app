@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:mobx/mobx.dart';
-import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../entities/genre_entitiy/genre_entity.dart';
+import '../../entities/movie_entity/movie_entity.dart';
 import '../../http/repositories/movies_repository.dart';
 import '../loading_state/loading_state.dart';
 
@@ -24,10 +25,19 @@ abstract class DashboardStateBase with Store {
   ObservableList<MovieEntity> nowBroadcastMovies =
       ObservableList<MovieEntity>();
 
+  @observable
+  ObservableList<GenreEntity> genres = ObservableList<GenreEntity>();
+
   @action
   Future<void> getMovies() async {
     final res = await moviesRepository.getMovies();
     movies = res.results.asObservable();
+  }
+
+  @action
+  Future<void> getGenres() async {
+    final res = await moviesRepository.getGenres();
+    genres = res.genres.asObservable();
   }
 
   @action

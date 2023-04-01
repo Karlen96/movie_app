@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../entities/movie_entity/movie_entity.dart';
 import '../../http/repositories/movies_repository.dart';
 import '../loading_state/loading_state.dart';
 

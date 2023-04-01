@@ -25,15 +25,21 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<MovieRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData,
-          child: MoviePage(key: args.key, movie: args.movie),
-          fullscreenDialog: true);
+          child: MoviePage(key: args.key, movie: args.movie));
+    },
+    GenreRoute.name: (routeData) {
+      final args = routeData.argsAs<GenreRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData,
+          child: GenrePage(key: args.key, genre: args.genre));
     }
   };
 
   @override
   List<RouteConfig> get routes => [
         RouteConfig(DashboardRoute.name, path: '/'),
-        RouteConfig(MovieRoute.name, path: '/movie-page')
+        RouteConfig(MovieRoute.name, path: '/movie-page'),
+        RouteConfig(GenreRoute.name, path: '/genre-page')
       ];
 }
 
@@ -65,5 +71,28 @@ class MovieRouteArgs {
   @override
   String toString() {
     return 'MovieRouteArgs{key: $key, movie: $movie}';
+  }
+}
+
+/// generated route for
+/// [GenrePage]
+class GenreRoute extends PageRouteInfo<GenreRouteArgs> {
+  GenreRoute({Key? key, required MovieType genre})
+      : super(GenreRoute.name,
+            path: '/genre-page', args: GenreRouteArgs(key: key, genre: genre));
+
+  static const String name = 'GenreRoute';
+}
+
+class GenreRouteArgs {
+  const GenreRouteArgs({this.key, required this.genre});
+
+  final Key? key;
+
+  final MovieType genre;
+
+  @override
+  String toString() {
+    return 'GenreRouteArgs{key: $key, genre: $genre}';
   }
 }
