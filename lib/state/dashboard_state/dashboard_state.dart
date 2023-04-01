@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:faker/faker.dart';
 import 'package:mobx/mobx.dart';
 import '../../entities/movie_entitiy/movie_entity.dart';
 import '../../http/repositories/movies_repository.dart';
@@ -26,60 +25,31 @@ abstract class DashboardStateBase with Store {
       ObservableList<MovieEntity>();
 
   @action
-  Future<void> getMoviesMock() async {
-    await loadingState.toggleLoading();
-    final moviesMockData = List.generate(
-      random.nextInt(20) + 5,
-      (index) {
-        return MovieEntity(
-          title: faker.company.suffix(),
-          id: index,
-          overview: faker.lorem.sentence(),
-          imageUrl: faker.image.image(
-            random: true,
-          ),
-        );
-      },
-    );
-    final topMoviesData = List.generate(
-      random.nextInt(50) + 26,
-      (index) {
-        return MovieEntity(
-          title: faker.company.suffix(),
-          id: 25 + index,
-          overview: faker.lorem.sentence(),
-          imageUrl: faker.image.image(
-            random: true,
-          ),
-        );
-      },
-    );
-    final nowBroadcastMoviesMockData = List.generate(
-      random.nextInt(75) + 51,
-      (index) {
-        return MovieEntity(
-          title: faker.company.suffix(),
-          id: 50 + index,
-          overview: faker.lorem.sentence(),
-          imageUrl: faker.image.image(
-            random: true,
-          ),
-        );
-      },
-    );
-    await Future.delayed(
-      const Duration(seconds: 2),
-    );
-    movies = moviesMockData.asObservable();
-    topMovies = topMoviesData.asObservable();
-    nowBroadcastMovies = nowBroadcastMoviesMockData.asObservable();
-    await loadingState.toggleLoading(val: false);
+  Future<void> getMovies() async {
+    final res = await moviesRepository.getMovies();
+    movies = res.results.asObservable();
   }
 
-  ///TODO implement it in the future
-// @action
-// Future<void> getMovies() async {
-//   final res = await moviesRepository.getMovies();
-//   movies = res.results.asObservable();
-// }
+  @action
+  Future<void> getTopMovies() async {
+    final res = await moviesRepository.getMovies(page: 2);
+    topMovies = res.results.asObservable();
+  }
+
+  @action
+  Future<void> getBroadcastMovies() async {
+    final res = await moviesRepository.getMovies(page: 3);
+    nowBroadcastMovies = res.results.asObservable();
+  }
+
+  Future<void> getAllMovies() async {
+    await Future.wait(
+      [
+        getMovies(),
+        getTopMovies(),
+        getBroadcastMovies(),
+      ],
+    );
+    await loadingState.toggleLoading(val: false);
+  }
 }

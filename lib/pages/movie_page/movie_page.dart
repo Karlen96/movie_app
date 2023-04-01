@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../consts/dimens.dart';
 import '../../entities/movie_entitiy/movie_entity.dart';
+import '../../entities/video_entity/video_entity.dart';
 import '../../mixins/after_first_layout.dart';
 import '../../state/movie_state/movie_state.dart';
+import '../../widgets/video_player.dart';
 import 'widget/custom_flexible_space.dart';
 
 class MoviePage extends StatefulWidget {
@@ -27,11 +29,32 @@ class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
     movieState = MovieState(
       movie: widget.movie,
     );
+    movieState.loadingState.toggleLoading();
   }
 
   @override
   Future<void> afterFirstLayout(BuildContext context) async {
     await movieState.getMovie();
+  }
+
+  void onPlay() {
+    VideoEntity? video;
+
+    if (movieState.movie.videos != null &&
+        movieState.movie.videos!.results.isNotEmpty) {
+      video = movieState.movie.videos!.results.first;
+    }
+
+    if (video != null) {
+      showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          child: VideoPlayerWidget(
+            video: video!,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -49,6 +72,7 @@ class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
             elevation: 0,
             flexibleSpace: CustomFlexibleSpace(
               movieState: movieState,
+              onPlay: onPlay,
             ),
           ),
           SliverPadding(
@@ -74,7 +98,9 @@ class _MoviePageState extends State<MoviePage> with AfterLayoutMixin {
             ),
           ),
           const SliverToBoxAdapter(
-            child: SizedBox(height: 500,),
+            child: SizedBox(
+              height: 500,
+            ),
           ),
         ],
       ),

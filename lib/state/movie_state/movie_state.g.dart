@@ -24,18 +24,12 @@ mixin _$MovieState on MovieStateBase, Store {
     });
   }
 
-  late final _$MovieStateBaseActionController =
-      ActionController(name: 'MovieStateBase', context: context);
+  late final _$getMovieAsyncAction =
+      AsyncAction('MovieStateBase.getMovie', context: context);
 
   @override
-  void setMovie(MovieEntity movieData) {
-    final _$actionInfo = _$MovieStateBaseActionController.startAction(
-        name: 'MovieStateBase.setMovie');
-    try {
-      return super.setMovie(movieData);
-    } finally {
-      _$MovieStateBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> getMovie() {
+    return _$getMovieAsyncAction.run(() => super.getMovie());
   }
 
   @override

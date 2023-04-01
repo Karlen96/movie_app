@@ -1,23 +1,18 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../movie_entitiy/movie_entity.dart';
 
-class MetaEntity {
-  MetaEntity({
-    required this.results,
-    this.page = 1,
-  });
+part 'meta_entity.freezed.dart';
 
-  final int page;
-  final List<MovieEntity> results;
+part 'meta_entity.g.dart';
 
-  factory MetaEntity.fromJson(Map<String, dynamic> data) {
-    final page = (data['page'] ?? 1) as int;
-    final results = data['results'] as List<dynamic>;
+@freezed
+class MetaEntity with _$MetaEntity {
+  const factory MetaEntity({
+    @Default(1) int page,
+    @Default(<MovieEntity>[]) List<MovieEntity> results,
+  }) = _MetaEntity;
 
-    return MetaEntity(
-      results: results
-          .map((e) => MovieEntity.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      page: page,
-    );
-  }
+  factory MetaEntity.fromJson(Map<String, Object?> json) =>
+      _$MetaEntityFromJson(json);
 }

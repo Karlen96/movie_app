@@ -1,29 +1,26 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../../consts/configs.dart';
+import '../meta_videos_entity/meta_videos_entity.dart';
 
-class MovieEntity {
-  MovieEntity({
-    required this.id,
-    required this.title,
-    this.overview,
-    this.imageUrl,
-  });
+part 'movie_entity.freezed.dart';
 
-  final int id;
-  final String title;
-  final String? overview;
-  final String? imageUrl;
+part 'movie_entity.g.dart';
 
-  factory MovieEntity.fromJson(Map<String, dynamic> data) {
-    final id = data['id'] as int;
-    final title = data['title'] as String;
-    final overview = data['overview'] as String;
-    final imagePath = data['poster_path'] as String;
+@freezed
+class MovieEntity with _$MovieEntity {
+  const MovieEntity._();
 
-    return MovieEntity(
-      id: id,
-      title: title,
-      overview: overview,
-      imageUrl: '${ConfigsEntity.baseImage}$imagePath',
-    );
-  }
+  const factory MovieEntity({
+    required int id,
+    required String title,
+    MetaVideosEntity? videos,
+    String? overview,
+    @JsonKey(name: 'poster_path') String? posterPath,
+  }) = _MovieEntity;
+
+  factory MovieEntity.fromJson(Map<String, Object?> json) =>
+      _$MovieEntityFromJson(json);
+
+  String get imageUrl => '${ConfigsEntity.baseImage}$posterPath';
 }

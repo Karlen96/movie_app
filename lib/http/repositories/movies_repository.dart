@@ -4,9 +4,11 @@ import '../../entities/movie_entitiy/movie_entity.dart';
 import '../dio.dart';
 
 class MoviesRepository {
-  Future<MetaEntity> getMovies() async {
+  Future<MetaEntity> getMovies({
+    int page = 1,
+  }) async {
     final uri =
-        '${ConfigsEntity.baseUrl}/3/discover/movie?api_key=${ConfigsEntity.apiKey}';
+        '${ConfigsEntity.baseUrl}/3/discover/movie?api_key=${ConfigsEntity.apiKey}&page=$page';
     final res = await dio.get(uri);
 
     return MetaEntity.fromJson(res.data as Map<String, dynamic>);
@@ -14,7 +16,7 @@ class MoviesRepository {
 
   Future<MovieEntity> getMovie(int movieId) async {
     final uri =
-        '${ConfigsEntity.baseUrl}/3/movie/$movieId?api_key=${ConfigsEntity.apiKey}';
+        '${ConfigsEntity.baseUrl}/3/movie/$movieId?api_key=${ConfigsEntity.apiKey}&append_to_response=videos';
     final res = await dio.get(uri);
 
     return MovieEntity.fromJson(res.data as Map<String, dynamic>);

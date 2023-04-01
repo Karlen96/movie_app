@@ -12,14 +12,16 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
   const CustomFlexibleSpace({
     super.key,
     required this.movieState,
+    required this.onPlay,
   });
 
   final MovieState movieState;
+  final VoidCallback onPlay;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext, BoxConstraints) {
+      builder: (_, __) {
         final settings = context
             .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
         final deltaExtent = settings!.maxExtent - settings.minExtent;
@@ -31,34 +33,67 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
             math.max(0, 1.0 - kToolbarHeight / deltaExtent).toDouble();
         const fadeEnd = 1.0;
         final opacity = 1.0 - Interval(fadeStart, fadeEnd).transform(t);
+
         return Stack(
           fit: StackFit.expand,
           alignment: Alignment.bottomCenter,
+          clipBehavior: Clip.none,
           children: [
             Stack(
               fit: StackFit.expand,
               alignment: Alignment.bottomCenter,
               clipBehavior: Clip.none,
               children: [
-                Hero(
-                  tag: movieState.movie.id,
-                  child: ClipPath(
-                    clipper: CustomImageClipper(),
-                    child: Observer(
-                      builder: (_) => Image.network(
-                        movieState.movie.imageUrl!,
-                        fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 32),
+                  child: Hero(
+                    tag: movieState.movie.id,
+                    child: ClipPath(
+                      clipper: CustomImageClipper(),
+                      child: Observer(
+                        builder: (_) => Image.network(
+                          movieState.movie.imageUrl,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                  bottom: -32,
+                  bottom: 0,
                   left: 0,
                   right: 0,
-                  child: SizedBox(
-                    width: 64,
-                    height: 64,
+                  child: Opacity(
+                    opacity: 1 - opacity,
+                    child: const ColoredBox(
+                      color: AppColors.white,
+                      child: SizedBox(
+                        height: 100,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 16,
+                  left: 60,
+                  right: 60,
+                  child: Opacity(
+                    opacity: 1 - opacity,
+                    child: Text(
+                      movieState.movie.title,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  width: 64,
+                  height: 64,
+                  child: Opacity(
+                    opacity: opacity,
                     child: CircleAvatar(
                       backgroundColor: AppColors.white,
                       child: Observer(
@@ -71,9 +106,9 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
                                     height: 24,
                                     child: CircularProgressIndicator(),
                                   )
-                                : const IconButton(
-                                    onPressed: null,
-                                    icon: Icon(Icons.play_arrow),
+                                : IconButton(
+                                    onPressed: onPlay,
+                                    icon: const Icon(Icons.play_arrow),
                                   ),
                           );
                         },
@@ -82,33 +117,6 @@ class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
                   ),
                 ),
               ],
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Opacity(
-                opacity: 1 - opacity,
-                child: const ColoredBox(
-                  color: AppColors.white,
-                  child: SizedBox(
-                    height: 100,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).padding.top + 16,
-              left: 0,
-              right: 0,
-              child: Opacity(
-                opacity: 1 - opacity,
-                child: Text(
-                  movieState.movie.title,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-              ),
             ),
             Positioned(
               left: horizontalPaddingValue,

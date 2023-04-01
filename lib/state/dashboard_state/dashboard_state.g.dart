@@ -57,12 +57,12 @@ mixin _$DashboardState on DashboardStateBase, Store {
     });
   }
 
-  late final _$getMoviesMockAsyncAction =
-      AsyncAction('DashboardStateBase.getMoviesMock', context: context);
+  late final _$getMoviesAsyncAction =
+      AsyncAction('DashboardStateBase.getMovies', context: context);
 
   @override
-  Future<void> getMoviesMock() {
-    return _$getMoviesMockAsyncAction.run(() => super.getMoviesMock());
+  Future<void> getMovies() {
+    return _$getMoviesAsyncAction.run(() => super.getMovies());
   }
 
   @override
