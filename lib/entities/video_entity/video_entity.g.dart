@@ -6,8 +6,7 @@ part of 'video_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VideoEntity _$$_VideoEntityFromJson(Map<String, dynamic> json) =>
-    _$_VideoEntity(
+_$_VideoEntity _$$_VideoEntityFromJson(Map json) => _$_VideoEntity(
       name: json['name'] as String,
       key: json['key'] as String,
       id: json['id'] as String,

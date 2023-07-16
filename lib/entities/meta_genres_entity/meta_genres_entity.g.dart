@@ -6,15 +6,16 @@ part of 'meta_genres_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MetaGenresEntity _$$_MetaGenresEntityFromJson(Map<String, dynamic> json) =>
+_$_MetaGenresEntity _$$_MetaGenresEntityFromJson(Map json) =>
     _$_MetaGenresEntity(
       genres: (json['genres'] as List<dynamic>?)
-              ?.map((e) => GenreEntity.fromJson(e as Map<String, dynamic>))
+              ?.map((e) =>
+                  GenreEntity.fromJson(Map<String, Object?>.from(e as Map)))
               .toList() ??
           const <GenreEntity>[],
     );
 
 Map<String, dynamic> _$$_MetaGenresEntityToJson(_$_MetaGenresEntity instance) =>
     <String, dynamic>{
-      'genres': instance.genres,
+      'genres': instance.genres.map((e) => e.toJson()).toList(),
     };

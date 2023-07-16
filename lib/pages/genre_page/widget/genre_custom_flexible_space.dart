@@ -7,7 +7,7 @@ import '../../../enums/movie_type.dart';
 import '../../../routes/router.dart';
 
 class GenreCustomFlexibleSpace extends StatelessWidget
-    with PreferredSizeWidget {
+    implements PreferredSizeWidget {
   const GenreCustomFlexibleSpace({
     super.key,
     required this.movieType,

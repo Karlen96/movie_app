@@ -6,22 +6,31 @@ part of 'movie_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MovieEntity _$$_MovieEntityFromJson(Map<String, dynamic> json) =>
-    _$_MovieEntity(
+_$_MovieEntity _$$_MovieEntityFromJson(Map json) => _$_MovieEntity(
       id: json['id'] as int,
       title: json['title'] as String,
       videos: json['videos'] == null
           ? null
-          : MetaVideosEntity.fromJson(json['videos'] as Map<String, dynamic>),
+          : MetaVideosEntity.fromJson(
+              Map<String, Object?>.from(json['videos'] as Map)),
       overview: json['overview'] as String?,
       posterPath: json['poster_path'] as String?,
     );
 
-Map<String, dynamic> _$$_MovieEntityToJson(_$_MovieEntity instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-      'videos': instance.videos,
-      'overview': instance.overview,
-      'poster_path': instance.posterPath,
-    };
+Map<String, dynamic> _$$_MovieEntityToJson(_$_MovieEntity instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'title': instance.title,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('videos', instance.videos?.toJson());
+  writeNotNull('overview', instance.overview);
+  writeNotNull('poster_path', instance.posterPath);
+  return val;
+}

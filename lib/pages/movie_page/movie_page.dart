@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../../consts/dimens.dart';
@@ -8,6 +9,7 @@ import '../../state/movie_state/movie_state.dart';
 import '../../widgets/video_player.dart';
 import 'widget/movie_custom_flexible_space.dart';
 
+@RoutePage()
 class MoviePage extends StatefulWidget {
   const MoviePage({
     super.key,

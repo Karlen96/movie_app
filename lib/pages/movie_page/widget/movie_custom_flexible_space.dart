@@ -8,7 +8,7 @@ import '../../../consts/dimens.dart';
 import '../../../routes/router.dart';
 import '../../../state/movie_state/movie_state.dart';
 
-class MovieCustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
+class MovieCustomFlexibleSpace extends StatelessWidget implements PreferredSizeWidget {
   const MovieCustomFlexibleSpace({
     super.key,
     required this.movieState,

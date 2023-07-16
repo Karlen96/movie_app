@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../consts/assets.dart';
 
-class CustomFlexibleSpace extends StatelessWidget with PreferredSizeWidget {
+class CustomFlexibleSpace extends StatelessWidget implements PreferredSizeWidget {
   const CustomFlexibleSpace({
     super.key,
     required this.openDrawer,

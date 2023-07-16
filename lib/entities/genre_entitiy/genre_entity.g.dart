@@ -6,8 +6,7 @@ part of 'genre_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_GenreEntity _$$_GenreEntityFromJson(Map<String, dynamic> json) =>
-    _$_GenreEntity(
+_$_GenreEntity _$$_GenreEntityFromJson(Map json) => _$_GenreEntity(
       id: json['id'] as int,
       name: json['name'] as String,
     );

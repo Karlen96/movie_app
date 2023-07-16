@@ -48,7 +48,9 @@ class MoviesHorizontalListWrapper extends StatelessWidget {
             itemBuilder: (_, i) {
               return ScaleTap(
                 onPressed: () {
-                  router.push(MovieRoute(movie: movies[i]));
+                  router.push(
+                    MovieRoute(movie: movies[i]),
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(

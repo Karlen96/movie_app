@@ -8,8 +8,8 @@ void setDio() {
   final options = BaseOptions(
     baseUrl: ConfigsEntity.baseUrl,
     contentType: 'application/json',
-    connectTimeout: 25000,
-    receiveTimeout: 25000,
+    connectTimeout: const Duration(seconds: 24),
+    receiveTimeout: const Duration(seconds: 24),
   );
 
   dio = Dio(options);

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+
 import '../entities/movie_entity/movie_entity.dart';
 import '../enums/movie_type.dart';
 import '../pages/dashboard_page/dashboard_page.dart';
@@ -8,20 +9,20 @@ import '../pages/movie_page/movie_page.dart';
 
 part 'app_router.gr.dart';
 
-@MaterialAutoRouter(
-  preferRelativeImports: true,
-  replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    MaterialRoute(
-      page: DashboardPage,
+@AutoRouterConfig()
+class AppRouter extends _$AppRouter {
+  @override
+  final List<AutoRoute> routes = [
+    AutoRoute(
       initial: true,
+      path: '/',
+      page: DashboardRoute.page,
     ),
-    MaterialRoute(
-      page: MoviePage,
+    AutoRoute(
+      page: MovieRoute.page,
     ),
-    MaterialRoute(
-      page: GenrePage,
+    AutoRoute(
+      page: GenreRoute.page,
     ),
-  ],
-)
-class AppRouter extends _$AppRouter {}
+  ];
+}

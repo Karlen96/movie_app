@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
@@ -11,6 +12,7 @@ import '../../routes/router.dart';
 import '../../state/genre_state/genre_state.dart';
 import 'widget/genre_custom_flexible_space.dart';
 
+@RoutePage()
 class GenrePage extends StatefulWidget {
   const GenrePage({
     super.key,
